@@ -6,8 +6,9 @@ Created on 30-Mar-2013
 
 import urllib2
 import thread
+import datetime
 Base_URL='http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=XXXXX&type=10-Q&dateb=2013&owner=exclude&count=100'
-
+count =0
 def Get_Urls(data):
     url=[]
     try:
@@ -24,12 +25,14 @@ def Get_Urls(data):
         return []
 
 def Get_Archive_From_Url(url,Rep):
+    Rep=Rep.lower()
     finurl=[]
     try:
         for u in url:
             usock = urllib2.urlopen(u)
             data = usock.read()
             usock.close()
+            data=data.lower()
             index1=data.index(Rep)
             data = data[:index1]
             index2=data.rfind(');">')
@@ -44,6 +47,7 @@ def Get_Archive_From_Url(url,Rep):
 
 
 def Start_Crawler(Field):
+    global count
     for tick in open('Ticker_Sym'):
         tick.strip()
         temp=Base_URL
@@ -54,10 +58,15 @@ def Start_Crawler(Field):
         data = usock.read()
         usock.close()   
         url= Get_Urls(data)
-        thread.start_new_thread(Thread_Print,(tick,Get_Archive_From_Url(url, Field)))
+        count=count+1
+        thread.start_new_thread(Thread_Print,(tick,Get_Archive_From_Url(url, Field),count))
+        return
 
-def Thread_Print(tick,mess):
-    print tick,mess
+def Thread_Print(tick,mess,count):
+    print tick,mess,count
 
 if __name__ == '__main__':
+   # a = datetime.datetime.now().replace(microsecond=0)
     Start_Crawler('CONSOLIDATED STATEMENTS OF INCOME')
+    #b = datetime.datetime.now().replace(microsecond=0)
+    #print(b-a)
