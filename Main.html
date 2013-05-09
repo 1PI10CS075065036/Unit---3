@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Python 3</title>
+<style type="text/css">
+#que
+{
+	height:40px;
+	width:500px;
+	font-size:100%;
+}
+h1
+{
+	text-align:centre;
+}
+</style>
+<script type="text/javascript">
+
+function resize()
+{
+	x=window.innerWidth;
+	y=window.innerHeight;
+	ele=document.getElementById("que");
+	h=document.getElementById("h");
+	main=document.getElementById("head");
+	
+	ele.style.position="absolute";
+	main.style.position="absolute";
+	h.style.position="absolute";
+	h.style.top=parseInt(y/3)+"px"
+	main.style.top=parseInt(y/6)+"px"
+	h.style.left=parseInt(x/2)-(h.offsetWidth/2)+"px";
+	main.style.left=parseInt(x/2)-(main.offsetWidth/2)+"px";
+	
+	ele.style.left=parseInt(x/2)-(250)+"px";
+	ele.style.top=parseInt(y/2)+"px";
+	
+}
+</script>
+<head>
+<body onload="resize()" onresize="resize()">
+	<br/><br/><br/><br/><br/><br/>
+	<h1 id="head">Financial Database</h1>
+	
+	
+	
+	<h2 id="h">Please Enter The Query In Search BOX</h2>
+
+	<form action="cgi-bin/Server.py" method="POST">
+		<input type="text" size="30" name="query" id="que"><br/>
+</form>
+</body>
+</html>
