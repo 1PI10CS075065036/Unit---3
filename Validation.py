@@ -36,7 +36,7 @@ def val_qry(a):#validation begins from here
         return 0 , sting
     return e , 's'
 
-def numand(a):
+def numand(a):#count number of ands and make sure they are properly typed
     global sting
     n=len(a)
     x=0
@@ -65,7 +65,7 @@ def numand(a):
         
         return b,1
             
-def chck_where(a,b):  
+def chck_where(a,b):  #check the arguments of where
     global sting          
     x=0
     z=0
@@ -82,7 +82,7 @@ def chck_where(a,b):
     return 1
         
         
-def chk_args2(a):
+def chk_args2(a):#check if given arguments are valid
     global sting
     n=len(a)
     x=0
