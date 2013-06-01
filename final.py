@@ -6,7 +6,7 @@ from Validation import val_qry
 from bson.objectid import ObjectId
 sting=""
 
-def read(z) :
+def read(z) : #reads all the data from list and returns a list of with proper structured data
 	a={}
 	n=4
 	i=0
@@ -29,11 +29,11 @@ def read(z) :
 	#print a
 	return Company_Name,Ticker_Symbol,a
 
-def fdetails(z):
+def fdetails(z): #obtain cname,tsym
 	return z[0],z[1]
 
 	
-def details(z,counter):
+def details(z,counter):#from the crawled data list extract the data in a orderly manner
 
 	Eps=z[2][counter][0]
 	
@@ -63,14 +63,14 @@ def details(z,counter):
 	counter=counter+1
 	return Eps,Revenue,SandM_Expenses,RandD_Expenses,Tax,Service_Expenses,Total_Expenses,Operating_Margin,Operating_Margin_Percentage,RandD_Expenses,Growth_Rate,Year,counter
 
-def con():
+def con():#make connections
 	from pymongo import MongoClient
 	client=MongoClient("localhost",27017)
 	db = client['test_database']
 	collection = db['test_collection']
 	return db,collection
 
-def insert(z):
+def insert(z):#the function for inserting data into a collection and into the db
 
 	db,collection=con()
 	
@@ -96,7 +96,7 @@ def insert(z):
 			i=i+1	
 		q=q+1
 
-def wbsp(a,n):
+def wbsp(a,n):#removes sp chars and spaces
 	i=0
 	c=[]
 	
@@ -109,7 +109,7 @@ def wbsp(a,n):
 	c.append(d[0])
 	return c
 
-def nums(c):
+def nums(c):#number of select aruments
 	n=len(c)
 	i=1
 	j=0
@@ -124,7 +124,7 @@ def nums(c):
 	#print j
 	return j
 
-def posw(w,n):
+def posw(w,n):#position of where
 	i=0
 	while i<n:
 
@@ -133,7 +133,7 @@ def posw(w,n):
 		i=i+1
 	return i
 
-def numa(c):
+def numa(c):#number of ands
 	n=len(c)
 	
 	j=0
@@ -147,7 +147,7 @@ def numa(c):
 		i=i+1
 	return j
 
-def arwq(c,noa):
+def arwq(c,noa):#number of where arguments
 	x=-2
 	i=0
 	
@@ -172,7 +172,7 @@ def arwq(c,noa):
 #DHIREN>PY BEGINS HERE !
 
 
-def convert(x):
+def convert(x):#conversion from string to int and vice versa
 	try:
 		return int(x)
 	except:
@@ -182,7 +182,7 @@ def convert(x):
 
 
 
-def get(a,nos,noa):
+def get(a,nos,noa):#get the select and where dictionaries for querying mongodb
 	#print a
 	where={}
 	select={}
@@ -193,7 +193,7 @@ def get(a,nos,noa):
 	#print where
 	return select , where 
 
-def get_sel(a,nos):
+def get_sel(a,nos):#get select dict
 	s={}
 	i=1
 	n=len(a)
@@ -237,7 +237,7 @@ def get_sel(a,nos):
 	
 	return s
 
-def getsq(a) :
+def getsq(a) :#getting quarter
 	n=len(a)
 	i=0
 	while i<n:
@@ -246,14 +246,14 @@ def getsq(a) :
 		i=i+1
 	return a[i+2] 
 
-def chks(a):
+def chks(a):#a check for slect if the arguments are either cname or tsym
 	b=0
 	if a == 'Company_Name' or a == 'Ticker_Symbol' :
 		return 1
 	else :
 		return b
 
-def chkq(a,n,k):
+def chkq(a,n,k):#check if quarter speciifed for query
 	i=k
 	while i< n :
 		if a[i]=='Quarter' :
@@ -261,14 +261,14 @@ def chkq(a,n,k):
 		i=i+1
 	return 0
 
-def get_q(a,n):
+def get_q(a,n):#get the number of quarter
 	i=0
 	while i<n:
 		if a[i]=='Quarter' :
 			return a[i+2]
 		i=i+1
 
-def get_where(a,noa):
+def get_where(a,noa):#get the where dictionary for query
 	w={}
 	n=len(a)
 	i=0
@@ -414,7 +414,7 @@ def get_where(a,noa):
 
 
 
-def prcs(a):
+def prcs(a):#processing query
 	db,collection=con()
 	posts = db.posts
 	m=a.split()
@@ -489,7 +489,7 @@ def prcs(a):
 						#print db.posts.find_one()
 			
 			
-def getres(cursor):
+def getres(cursor):#get results from object list returned from processed query
 	#print "hey"
 	#return 'test'
 	retlist = []
@@ -499,7 +499,7 @@ def getres(cursor):
 		#result_object['_id']
 	#print len(retlist)
 	return retlist
-def query():
+def query():#entering query
 
 	db,collection=con()
 	posts = db.posts
@@ -524,10 +524,10 @@ def query():
 		#run it
 	'''	
 
-def initlist():
+def initlist():#test initialisation list used for debugging purposes
 	return ['werty','wer',[['1','1','1','1','1','1','1','1','1','1','1','1'],['2','2','2','2','2','2','2','2','2','2','2','2'],['3','3','3','3','3','3','3','3','3','3','3','3'],['4','4','4','4','4','4','4','4','4','4','4','4']]]
 
-def update():
+def update():#performing updates ....not needed
 	db,collection=con()
 	posts = db.posts
                 
@@ -537,7 +537,7 @@ def update():
 	#posts.update({'Company_Name':'werty'},{"$set":{"Quarter.q4":{'Eps':57,'Revenue':74,'S&M_Expenses':54,'R&D_Expenses':75,'Tax':91,"Service_Expenses":48,"Total_Expenses":52,"Operating_Margin":56,"Operating_Margin_Percentage":60,"R&D_Expense_ratio":64,"Growth_Rate":68,'Year':134}}})
 	print posts.find_one()
 	
-if __name__ == '__main__':
+if __name__ == '__main__':#main
 	z=initlist()
 	while(1):
 		a=raw_input("1.to input 2.to query 3.to update\n")
